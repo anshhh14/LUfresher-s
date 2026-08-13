@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fresher's Night — Lucknow University</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0e1a;
+    --ink-soft:#141a2e;
+    --red:#d62828;
+    --red-dark:#9c1c1c;
+    --blue:#1c3f94;
+    --blue-dark:#0f2a6b;
+    --paper:#f4efde;
+    --paper-dim:#e8dfc4;
+    --pow:#ffc93c;
+    --white:#ffffff;
+    --line:#000000;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    font-family:'Work Sans', sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    overflow-x:hidden;
+    background-image:
+      radial-gradient(circle, rgba(10,14,26,0.06) 1px, transparent 1px);
+    background-size: 14px 14px;
+  }
+
+  .display{ font-family:'Bangers', cursive; letter-spacing:1px; }
+  .mono{ font-family:'Space Mono', monospace; }
+
+  a{ color:inherit; }
+
+  :focus-visible{ outline:3px solid var(--pow); outline-offset:3px; }
+
+  /* ---------- utility panel look ---------- */
+  .panel{
+    background:var(--white);
+    border:3px solid var(--line);
+    box-shadow: 6px 6px 0 var(--line);
+  }
+
+  .btn{
+    display:inline-block;
+    font-family:'Bangers', cursive;
+    font-size:1.15rem;
+    letter-spacing:1px;
+    padding:0.8rem 1.8rem;
+    border:3px solid var(--line);
+    background:var(--pow);
+    color:var(--ink);
+    box-shadow:5px 5px 0 var(--line);
+    cursor:pointer;
+    text-decoration:none;
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .btn:hover{ transform:translate(-2px,-2px); box-shadow:7px 7px 0 var(--line); }
+  .btn:active{ transform:translate(1px,1px); box-shadow:3px 3px 0 var(--line); }
+  .btn.btn-blue{ background:var(--blue); color:var(--white); }
+  .btn.btn-red{ background:var(--red); color:var(--white); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0.7rem 1.5rem;
+    background:var(--ink);
+    border-bottom:3px solid var(--line);
+  }
+  .nav .brand{ color:var(--pow); font-size:1.4rem; }
+  .nav .links{ display:flex; gap:1.2rem; }
+  .nav .links a{
+    color:var(--paper);
+    font-family:'Space Mono', monospace;
+    font-size:0.8rem;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    text-decoration:none;
+    border-bottom:2px solid transparent;
+    padding-bottom:2px;
+  }
+  .nav .links a:hover{ border-color:var(--pow); }
+  @media (max-width:560px){ .nav .links{ display:none; } }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    min-height:92vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    background:
+      linear-gradient(160deg, var(--blue) 0%, var(--blue-dark) 55%, var(--ink) 100%);
+    color:var(--paper);
+    overflow:hidden;
+    padding:5rem 1.5rem 6rem;
+    border-bottom:5px solid var(--line);
+  }
+
+  .web-corner{
+    position:absolute;
+    width:340px; height:340px;
+    pointer-events:none;
+    opacity:0.35;
+  }
+  .web-corner.tl{ top:-40px; left:-40px; }
+  .web-corner.br{ bottom:-40px; right:-40px; transform:rotate(180deg); }
+
+  .burst{
+    position:absolute;
+    top:50%; left:50%;
+    width:min(720px, 130vw);
+    height:min(720px, 130vw);
+    transform:translate(-50%,-50%);
+    background: var(--red);
+    clip-path: polygon(50% 0%, 61% 35%, 95% 25%, 72% 52%, 98% 68%, 63% 68%, 50% 100%, 37% 68%, 2% 68%, 28% 52%, 5% 25%, 39% 35%);
+    opacity:0.18;
+    z-index:0;
+  }
+
+  .hero-eyebrow{
+    position:relative; z-index:2;
+    font-family:'Space Mono', monospace;
+    text-transform:uppercase;
+    letter-spacing:3px;
+    font-size:0.85rem;
+    color:var(--pow);
+    margin-bottom:1rem;
+  }
+
+  .hero h1{
+    position:relative; z-index:2;
+    font-size:clamp(3.2rem, 11vw, 8rem);
+    line-height:0.95;
+    color:var(--white);
+    -webkit-text-stroke: 2px var(--line);
+    text-shadow: 5px 5px 0 var(--red), 9px 9px 0 var(--line);
+  }
+
+  .hero .tagline{
+    position:relative; z-index:2;
+    font-family:'Bangers', cursive;
+    font-size:clamp(1.3rem, 3vw, 2rem);
+    color:var(--pow);
+    margin-top:1.2rem;
+    letter-spacing:1px;
+  }
+
+  .hero .sub{
+    position:relative; z-index:2;
+    max-width:520px;
+    margin:1rem auto 2.2rem;
+    font-size:1.02rem;
+    color:var(--paper-dim);
+  }
+
+  .hero .cta-row{
+    position:relative; z-index:2;
+    display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;
+  }
+
+  .hero .joined{
+    position:relative; z-index:2;
+    margin-top:2rem;
+    font-family:'Space Mono', monospace;
+    font-size:0.85rem;
+    color:var(--paper-dim);
+  }
+  .hero .joined strong{ color:var(--pow); font-size:1.1rem; }
+
+  /* ---------- section shell ---------- */
+  section{ position:relative; padding:5rem 1.5rem; }
+  .section-inner{ max-width:1080px; margin:0 auto; }
+
+  .kicker{
+    font-family:'Space Mono', monospace;
+    font-size:0.78rem;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--red);
+    margin-bottom:0.6rem;
+  }
+  .section-title{
+    font-size:clamp(2.1rem, 5vw, 3.2rem);
+    margin-bottom:2.2rem;
+  }
+
+  .diagonal-top{
+    position:absolute; top:-3px; left:0; width:100%; height:60px;
+    background: repeating-linear-gradient(115deg, var(--line) 0 4px, transparent 4px 34px);
+    opacity:0.08;
+    pointer-events:none;
+  }
+
+  /* ---------- countdown ---------- */
+  .countdown-wrap{
+    background:var(--ink);
+    color:var(--paper);
+    text-align:center;
+    border-top:5px solid var(--line);
+    border-bottom:5px solid var(--line);
+  }
+  .countdown-wrap .kicker{ color:var(--pow); }
+  .countdown-wrap .section-title{ color:var(--white); }
+
+  .countdown{
+    display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;
+  }
+  .count-box{
+    background:var(--red);
+    color:var(--white);
+    border:3px solid var(--line);
+    box-shadow:5px 5px 0 rgba(0,0,0,0.5);
+    min-width:110px;
+    padding:1.2rem 0.5rem;
+  }
+  .count-box .num{
+    font-family:'Space Mono', monospace;
+    font-weight:700;
+    font-size:clamp(2rem, 6vw, 3rem);
+    line-height:1;
+  }
+  .count-box .lab{
+    font-family:'Space Mono', monospace;
+    font-size:0.7rem;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-top:0.4rem;
+    opacity:0.85;
+  }
+  .countdown-wrap .live-note{
+    margin-top:1.6rem;
+    font-family:'Space Mono', monospace;
+    font-size:0.8rem;
+    color:var(--paper-dim);
+  }
+
+  /* ---------- details ---------- */
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:1.4rem;
+  }
+  .card{
+    padding:1.6rem;
+    display:flex; flex-direction:column; gap:0.7rem;
+  }
+  .card .icon{ width:42px; height:42px; }
+  .card h3{ font-family:'Bangers', cursive; font-size:1.3rem; letter-spacing:1px; }
+  .card p{ font-size:0.95rem; color:#333; }
+  .card .cap{ font-family:'Space Mono', monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:2px; color:var(--red); }
+
+  /* ---------- about / origin ---------- */
+  .about{
+    background:var(--blue);
+    color:var(--paper);
+    border-top:5px solid var(--line);
+    border-bottom:5px solid var(--line);
+  }
+  .about .kicker{ color:var(--pow); }
+  .about .section-title{ color:var(--white); }
+  .about p{
+    max-width:680px;
+    font-size:1.05rem;
+    line-height:1.7;
+    color:var(--paper-dim);
+  }
+  .about p + p{ margin-top:1rem; }
+
+  /* ---------- register ---------- */
+  .register-grid{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:2rem;
+  }
+  form{
+    display:grid;
+    gap:1rem;
+    padding:1.8rem;
+  }
+  .field{ display:flex; flex-direction:column; gap:0.35rem; }
+  .field label{
+    font-family:'Space Mono', monospace;
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+  }
+  .field input, .field select{
+    padding:0.75rem 0.8rem;
+    border:2px solid var(--line);
+    background:var(--paper);
+    font-family:'Work Sans', sans-serif;
+    font-size:0.95rem;
+  }
+  .field input:focus, .field select:focus{ background:var(--white); }
+  .row-2{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  @media (max-width:540px){ .row-2{ grid-template-columns:1fr; } }
+
+  .form-msg{
+    font-family:'Space Mono', monospace;
+    font-size:0.82rem;
+    padding:0.7rem 0.9rem;
+    border:2px solid var(--line);
+    display:none;
+  }
+  .form-msg.show{ display:block; }
+  .form-msg.ok{ background:#dff5df; }
+  .form-msg.err{ background:#ffe0e0; }
+
+  .success-card{
+    display:none;
+    padding:2rem;
+    text-align:center;
+  }
+  .success-card.show{ display:block; }
+  .success-card h3{ font-family:'Bangers', cursive; font-size:2rem; color:var(--red); }
+  .success-card p{ margin-top:0.6rem; color:#333; }
+
+  /* ---------- footer ---------- */
+  footer{
+    background:var(--ink);
+    color:var(--paper-dim);
+    text-align:center;
+    padding:2.5rem 1.5rem;
+    font-family:'Space Mono', monospace;
+    font-size:0.8rem;
+  }
+  footer .fbrand{ color:var(--pow); font-family:'Bangers', cursive; font-size:1.3rem; letter-spacing:1px; margin-bottom:0.5rem; }
+
+  /* ---------- admin ---------- */
+  .admin-toggle{
+    position:fixed; right:1.1rem; bottom:1.1rem; z-index:80;
+    font-family:'Space Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:1px;
+    padding:0.6rem 0.9rem;
+    background:var(--ink);
+    color:var(--pow);
+    border:2px solid var(--line);
+    box-shadow:4px 4px 0 rgba(0,0,0,0.4);
+    cursor:pointer;
+  }
+  .admin-overlay{
+    position:fixed; inset:0; z-index:90;
+    background:rgba(10,14,26,0.85);
+    display:none;
+    align-items:flex-start; justify-content:center;
+    padding:3rem 1rem;
+    overflow-y:auto;
+  }
+  .admin-overlay.show{ display:flex; }
+  .admin-modal{
+    background:var(--paper);
+    width:min(920px, 100%);
+    padding:1.8rem;
+    max-height:85vh;
+    overflow-y:auto;
+  }
+  .admin-modal h2{ font-family:'Bangers', cursive; font-size:1.8rem; margin-bottom:0.3rem; }
+  .admin-modal .sub{ font-family:'Space Mono', monospace; font-size:0.75rem; color:#555; margin-bottom:1.2rem; }
+  .admin-row-actions{ display:flex; gap:0.7rem; flex-wrap:wrap; margin-bottom:1.2rem; }
+  table{ width:100%; border-collapse:collapse; font-size:0.85rem; }
+  th, td{ border:1px solid #999; padding:0.5rem 0.6rem; text-align:left; }
+  th{ background:var(--blue); color:var(--white); font-family:'Space Mono', monospace; font-size:0.7rem; text-transform:uppercase; }
+  tr:nth-child(even){ background:#fff; }
+  tr:nth-child(odd){ background:var(--paper-dim); }
+  .empty-state{ font-family:'Space Mono', monospace; font-size:0.85rem; color:#555; padding:1rem 0; }
+  .close-admin{
+    float:right;
+    font-family:'Space Mono', monospace;
+    background:none;
+    border:2px solid var(--line);
+    padding:0.3rem 0.7rem;
+    cursor:pointer;
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="brand display">LU // FRESHERS</div>
+  <div class="links">
+    <a href="#details">Mission</a>
+    <a href="#about">Origin</a>
+    <a href="#register">Register</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <svg class="web-corner tl" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#F4EFDE" stroke-width="1.4">
+    <line x1="0" y1="0" x2="200" y2="0"/><line x1="0" y1="0" x2="0" y2="200"/>
+    <line x1="0" y1="0" x2="200" y2="200"/><line x1="0" y1="0" x2="140" y2="200"/>
+    <line x1="0" y1="0" x2="200" y2="140"/><line x1="0" y1="0" x2="90" y2="200"/>
+    <line x1="0" y1="0" x2="200" y2="90"/>
+    <path d="M10,0 Q15,15 0,20" /><path d="M25,0 Q38,35 0,48" />
+    <path d="M50,0 Q75,60 0,88" /><path d="M85,0 Q120,95 0,135" />
+    <path d="M130,0 Q150,130 0,165" /><path d="M175,0 Q185,160 0,190" />
+  </svg>
+  <svg class="web-corner br" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#F4EFDE" stroke-width="1.4">
+    <line x1="0" y1="0" x2="200" y2="0"/><line x1="0" y1="0" x2="0" y2="200"/>
+    <line x1="0" y1="0" x2="200" y2="200"/><line x1="0" y1="0" x2="140" y2="200"/>
+    <line x1="0" y1="0" x2="200" y2="140"/><line x1="0" y1="0" x2="90" y2="200"/>
+    <line x1="0" y1="0" x2="200" y2="90"/>
+    <path d="M10,0 Q15,15 0,20" /><path d="M25,0 Q38,35 0,48" />
+    <path d="M50,0 Q75,60 0,88" /><path d="M85,0 Q120,95 0,135" />
+    <path d="M130,0 Q150,130 0,165" /><path d="M175,0 Q185,160 0,190" />
+  </svg>
+  <div class="burst" aria-hidden="true"></div>
+
+  <div class="hero-eyebrow">Lucknow University Students' Council Presents</div>
+  <h1 class="display">FRESHERS<br>NIGHT</h1>
+  <div class="tagline">Every Legend Has A First Day.</div>
+  <p class="sub">One night, one campus, one brand-new batch of heroes. Swing in, suit up, and meet the class that's about to make Lucknow University history.</p>
+  <div class="cta-row">
+    <a href="#register" class="btn">Join The Squad</a>
+    <a href="#details" class="btn btn-blue">Mission Details</a>
+  </div>
+  <div class="joined">HEROES ALREADY REGISTERED: <strong id="joinedCount">—</strong></div>
+</header>
+
+<!-- COUNTDOWN -->
+<section class="countdown-wrap" id="countdown-sec">
+  <div class="section-inner" style="text-align:center;">
+    <div class="kicker">The Signal Is Live</div>
+    <h2 class="display section-title">T-MINUS TO LAUNCH</h2>
+    <div class="countdown mono" id="countdown">
+      <div class="count-box"><div class="num" id="cd-days">00</div><div class="lab">Days</div></div>
+      <div class="count-box"><div class="num" id="cd-hours">00</div><div class="lab">Hours</div></div>
+      <div class="count-box"><div class="num" id="cd-mins">00</div><div class="lab">Mins</div></div>
+      <div class="count-box"><div class="num" id="cd-secs">00</div><div class="lab">Secs</div></div>
+    </div>
+    <div class="live-note" id="countdownNote">Loading mission clock…</div>
+  </div>
+</section>
+
+<!-- DETAILS -->
+<section id="details">
+  <div class="diagonal-top"></div>
+  <div class="section-inner">
+    <div class="kicker">Mission Briefing</div>
+    <h2 class="display section-title">The Essentials</h2>
+    <div class="cards">
+      <div class="card panel">
+        <svg class="icon" viewBox="0 0 48 48" fill="none" stroke="#0a0e1a" stroke-width="2.4"><rect x="6" y="9" width="36" height="33" rx="2"/><line x1="6" y1="19" x2="42" y2="19"/><line x1="15" y1="4" x2="15" y2="13"/><line x1="33" y1="4" x2="33" y2="13"/></svg>
+        <div class="cap">Date</div>
+        <h3>15 September 2026</h3>
+        <p>Tuesday evening — mark it, tell your batchmates, set three reminders.</p>
+      </div>
+      <div class="card panel">
+        <svg class="icon" viewBox="0 0 48 48" fill="none" stroke="#0a0e1a" stroke-width="2.4"><circle cx="24" cy="24" r="18"/><line x1="24" y1="24" x2="24" y2="13"/><line x1="24" y1="24" x2="32" y2="28"/></svg>
+        <div class="cap">Time</div>
+        <h3>6:00 PM Onward</h3>
+        <p>Gates open at 6, main show kicks off at 7 sharp. Heroes are punctual.</p>
+      </div>
+      <div class="card panel">
+        <svg class="icon" viewBox="0 0 48 48" fill="none" stroke="#0a0e1a" stroke-width="2.4"><path d="M24 44s16-14.5 16-25a16 16 0 1 0-32 0c0 10.5 16 25 16 25z"/><circle cx="24" cy="19" r="5"/></svg>
+        <div class="cap">Venue</div>
+        <h3>University Auditorium</h3>
+        <p>Lucknow University main campus. Follow the banners from the front gate.</p>
+      </div>
+      <div class="card panel">
+        <svg class="icon" viewBox="0 0 48 48" fill="none" stroke="#0a0e1a" stroke-width="2.4"><path d="M8 24h32M14 14l10 10-10 10M34 14l-10 10 10 10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="cap">Dress Code</div>
+        <h3>Hero Casual</h3>
+        <p>Smart, bold, comfortable enough to dance. Capes optional, confidence mandatory.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT / ORIGIN -->
+<section class="about" id="about">
+  <div class="section-inner">
+    <div class="kicker">Origin Story</div>
+    <h2 class="display section-title">Your Story Starts Here</h2>
+    <p>Every senior on this campus was a fresher once — nervous, curious, and one night away from finding their people. Fresher's Night is that night: the one where strangers from forty different classrooms become one loud, unstoppable batch.</p>
+    <p>Expect music, games, performances, a few surprises, and the kind of energy that only happens when an entire university welcomes its newest members at once. Come find your crew.</p>
+  </div>
+</section>
+
+<!-- REGISTER -->
+<section id="register">
+  <div class="section-inner">
+    <div class="kicker">Suit Up</div>
+    <h2 class="display section-title">Register For The Night</h2>
+    <div class="register-grid">
+      <form id="regForm" class="panel" novalidate>
+        <div class="row-2">
+          <div class="field">
+            <label for="fname">Full Name</label>
+            <input type="text" id="fname" name="fname" required autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="femail">Email</label>
+            <input type="email" id="femail" name="femail" required autocomplete="email">
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="field">
+            <label for="fphone">Phone</label>
+            <input type="tel" id="fphone" name="fphone" required autocomplete="tel">
+          </div>
+          <div class="field">
+            <label for="fyear">Year</label>
+            <select id="fyear" name="fyear" required>
+              <option value="" disabled selected>Select year</option>
+              <option>1st Year</option>
+              <option>2nd Year</option>
+              <option>3rd Year</option>
+              <option>4th Year</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="fcourse">Course &amp; Branch</label>
+          <input type="text" id="fcourse" name="fcourse" placeholder="e.g. B.A. LLB, B.Tech CSE" required>
+        </div>
+        <div class="field">
+          <label for="falias">Hero Alias <span style="text-transform:none; letter-spacing:0;">(optional, just for fun)</span></label>
+          <input type="text" id="falias" name="falias" placeholder="What would your superhero name be?">
+        </div>
+        <div id="formMsg" class="form-msg mono"></div>
+        <button type="submit" class="btn btn-red" id="submitBtn">Lock In My Spot</button>
+      </form>
+
+      <div class="success-card panel" id="successCard">
+        <h3>BAM! You're In.</h3>
+        <p>Your spot for Fresher's Night is confirmed. Keep an eye on your email — details and surprises are coming.</p>
+        <button class="btn" id="registerAnother" style="margin-top:1.2rem;">Register Someone Else</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fbrand">FRESHERS NIGHT</div>
+  <div>Lucknow University Students' Council · See you on campus, hero.</div>
+</footer>
+
+<button class="admin-toggle" id="adminToggle">ORGANIZER LOGIN</button>
+
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-modal panel">
+    <button class="close-admin" id="closeAdmin">CLOSE ✕</button>
+    <h2 class="display">Registration Desk</h2>
+    <div class="sub" id="adminSub">Loading…</div>
+    <div class="admin-row-actions">
+      <button class="btn" id="exportCsv">Export CSV</button>
+      <button class="btn btn-blue" id="refreshAdmin">Refresh</button>
+    </div>
+    <div id="adminTableWrap"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============ EDIT THESE TO CUSTOMIZE ============ */
+  var EVENT_DATE = new Date('2026-09-15T18:00:00'); // event date/time shown in countdown
+  var ADMIN_PASSWORD = 'LU2026'; // simple gate for organizer panel — change this
+  /* =================================================== */
+
+  var STORAGE_KEY = 'freshers-registrations';
+
+  /* ---------- Countdown ---------- */
+  function pad(n){ return String(n).padStart(2,'0'); }
+  function tickCountdown(){
+    var now = new Date();
+    var diff = EVENT_DATE - now;
+    var note = document.getElementById('countdownNote');
+    if(diff <= 0){
+      document.getElementById('cd-days').textContent = '00';
+      document.getElementById('cd-hours').textContent = '00';
+      document.getElementById('cd-mins').textContent = '00';
+      document.getElementById('cd-secs').textContent = '00';
+      note.textContent = "It's happening — see you there, hero!";
+      return;
+    }
+    var d = Math.floor(diff / (1000*60*60*24));
+    var h = Math.floor((diff / (1000*60*60)) % 24);
+    var m = Math.floor((diff / (1000*60)) % 60);
+    var s = Math.floor((diff / 1000) % 60);
+    document.getElementById('cd-days').textContent = pad(d);
+    document.getElementById('cd-hours').textContent = pad(h);
+    document.getElementById('cd-mins').textContent = pad(m);
+    document.getElementById('cd-secs').textContent = pad(s);
+    note.textContent = 'Mission clock synced.';
+  }
+  tickCountdown();
+  setInterval(tickCountdown, 1000);
+
+  /* ---------- Storage helpers ---------- */
+  async function getRegistrations(){
+    try{
+      var res = await window.storage.get(STORAGE_KEY, true);
+      if(!res || !res.value) return [];
+      var parsed = JSON.parse(res.value);
+      return Array.isArray(parsed) ? parsed : [];
+    }catch(e){
+      return [];
+    }
+  }
+  async function saveRegistrations(list){
+    try{
+      var res = await window.storage.set(STORAGE_KEY, JSON.stringify(list), true);
+      return !!res;
+    }catch(e){
+      return false;
+    }
+  }
+
+  /* ---------- Joined count on hero ---------- */
+  async function refreshJoinedCount(){
+    var list = await getRegistrations();
+    var el = document.getElementById('joinedCount');
+    el.textContent = list.length;
+  }
+  refreshJoinedCount();
+
+  /* ---------- Registration form ---------- */
+  var form = document.getElementById('regForm');
+  var msg = document.getElementById('formMsg');
+  var submitBtn = document.getElementById('submitBtn');
+  var successCard = document.getElementById('successCard');
+
+  function showMsg(text, kind){
+    msg.textContent = text;
+    msg.className = 'form-msg mono show ' + kind;
+  }
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    var name = document.getElementById('fname').value.trim();
+    var email = document.getElementById('femail').value.trim();
+    var phone = document.getElementById('fphone').value.trim();
+    var year = document.getElementById('fyear').value;
+    var course = document.getElementById('fcourse').value.trim();
+    var alias = document.getElementById('falias').value.trim();
+
+    if(!name || !email || !phone || !year || !course){
+      showMsg('Fill in every required field before locking in your spot.', 'err');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Locking In…';
+
+    try{
+      var list = await getRegistrations();
+      var alreadyIn = list.some(function(r){ return r.email.toLowerCase() === email.toLowerCase(); });
+      if(alreadyIn){
+        showMsg('This email is already registered for the night.', 'err');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Lock In My Spot';
+        return;
+      }
+      list.push({
+        id: Date.now() + '-' + Math.random().toString(36).slice(2,8),
+        name: name, email: email, phone: phone, year: year, course: course, alias: alias,
+        registeredAt: new Date().toISOString()
+      });
+      var ok = await saveRegistrations(list);
+      if(!ok){
+        showMsg('Something glitched on our end — please try again.', 'err');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Lock In My Spot';
+        return;
+      }
+      form.style.display = 'none';
+      successCard.classList.add('show');
+      refreshJoinedCount();
+    }catch(err){
+      showMsg('Something glitched on our end — please try again.', 'err');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Lock In My Spot';
+    }
+  });
+
+  document.getElementById('registerAnother').addEventListener('click', function(){
+    form.reset();
+    form.style.display = 'grid';
+    successCard.classList.remove('show');
+    msg.classList.remove('show');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Lock In My Spot';
+  });
+
+  /* ---------- Admin panel ---------- */
+  var adminToggle = document.getElementById('adminToggle');
+  var adminOverlay = document.getElementById('adminOverlay');
+  var adminSub = document.getElementById('adminSub');
+  var adminTableWrap = document.getElementById('adminTableWrap');
+  var unlocked = false;
+
+  function escapeHtml(str){
+    return String(str).replace(/[&<>"']/g, function(c){
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+    });
+  }
+
+  async function renderAdminTable(){
+    adminSub.textContent = 'Loading registrations…';
+    var list = await getRegistrations();
+    list.sort(function(a,b){ return new Date(b.registeredAt) - new Date(a.registeredAt); });
+    adminSub.textContent = list.length + ' hero(es) registered so far.';
+    if(list.length === 0){
+      adminTableWrap.innerHTML = '<div class="empty-state">No registrations yet. Once people start signing up, they will show here.</div>';
+      return;
+    }
+    var rows = list.map(function(r){
+      return '<tr>' +
+        '<td>' + escapeHtml(r.name) + '</td>' +
+        '<td>' + escapeHtml(r.email) + '</td>' +
+        '<td>' + escapeHtml(r.phone) + '</td>' +
+        '<td>' + escapeHtml(r.course) + '</td>' +
+        '<td>' + escapeHtml(r.year) + '</td>' +
+        '<td>' + escapeHtml(r.alias || '—') + '</td>' +
+        '<td>' + new Date(r.registeredAt).toLocaleString() + '</td>' +
+      '</tr>';
+    }).join('');
+    adminTableWrap.innerHTML =
+      '<div style="overflow-x:auto;"><table><thead><tr>' +
+      '<th>Name</th><th>Email</th><th>Phone</th><th>Course</th><th>Year</th><th>Alias</th><th>Registered At</th>' +
+      '</tr></thead><tbody>' + rows + '</tbody></table></div>';
+  }
+
+  adminToggle.addEventListener('click', function(){
+    if(!unlocked){
+      var pw = prompt('Organizer password:');
+      if(pw !== ADMIN_PASSWORD){
+        if(pw !== null) alert('Incorrect password.');
+        return;
+      }
+      unlocked = true;
+    }
+    adminOverlay.classList.add('show');
+    renderAdminTable();
+  });
+
+  document.getElementById('closeAdmin').addEventListener('click', function(){
+    adminOverlay.classList.remove('show');
+  });
+  adminOverlay.addEventListener('click', function(e){
+    if(e.target === adminOverlay) adminOverlay.classList.remove('show');
+  });
+  document.getElementById('refreshAdmin').addEventListener('click', renderAdminTable);
+
+  document.getElementById('exportCsv').addEventListener('click', async function(){
+    var list = await getRegistrations();
+    if(list.length === 0){ alert('No registrations to export yet.'); return; }
+    var header = ['Name','Email','Phone','Course','Year','Alias','Registered At'];
+    var lines = [header.join(',')];
+    list.forEach(function(r){
+      var row = [r.name, r.email, r.phone, r.course, r.year, r.alias || '', r.registeredAt]
+        .map(function(v){ return '"' + String(v).replace(/"/g,'""') + '"'; });
+      lines.push(row.join(','));
+    });
+    var csv = lines.join('\n');
+    var blob = new Blob([csv], { type: 'text/csv' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'freshers-night-registrations.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+})();
+</script>
+</body>
+</html>
