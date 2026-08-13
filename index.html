@@ -342,6 +342,7 @@
   .field input:focus, .field select:focus{ background:var(--white); }
   .row-2{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
   @media (max-width:540px){ .row-2{ grid-template-columns:1fr; } }
+  .hidden-field{ display:none; }
 
   .form-msg{
     font-family:'Space Mono', monospace;
@@ -373,53 +374,6 @@
     font-size:0.8rem;
   }
   footer .fbrand{ color:var(--pow); font-family:'Bangers', cursive; font-size:1.3rem; letter-spacing:1px; margin-bottom:0.5rem; }
-
-  /* ---------- admin ---------- */
-  .admin-toggle{
-    position:fixed; right:1.1rem; bottom:1.1rem; z-index:80;
-    font-family:'Space Mono', monospace;
-    font-size:0.72rem;
-    letter-spacing:1px;
-    padding:0.6rem 0.9rem;
-    background:var(--ink);
-    color:var(--pow);
-    border:2px solid var(--line);
-    box-shadow:4px 4px 0 rgba(0,0,0,0.4);
-    cursor:pointer;
-  }
-  .admin-overlay{
-    position:fixed; inset:0; z-index:90;
-    background:rgba(10,14,26,0.85);
-    display:none;
-    align-items:flex-start; justify-content:center;
-    padding:3rem 1rem;
-    overflow-y:auto;
-  }
-  .admin-overlay.show{ display:flex; }
-  .admin-modal{
-    background:var(--paper);
-    width:min(920px, 100%);
-    padding:1.8rem;
-    max-height:85vh;
-    overflow-y:auto;
-  }
-  .admin-modal h2{ font-family:'Bangers', cursive; font-size:1.8rem; margin-bottom:0.3rem; }
-  .admin-modal .sub{ font-family:'Space Mono', monospace; font-size:0.75rem; color:#555; margin-bottom:1.2rem; }
-  .admin-row-actions{ display:flex; gap:0.7rem; flex-wrap:wrap; margin-bottom:1.2rem; }
-  table{ width:100%; border-collapse:collapse; font-size:0.85rem; }
-  th, td{ border:1px solid #999; padding:0.5rem 0.6rem; text-align:left; }
-  th{ background:var(--blue); color:var(--white); font-family:'Space Mono', monospace; font-size:0.7rem; text-transform:uppercase; }
-  tr:nth-child(even){ background:#fff; }
-  tr:nth-child(odd){ background:var(--paper-dim); }
-  .empty-state{ font-family:'Space Mono', monospace; font-size:0.85rem; color:#555; padding:1rem 0; }
-  .close-admin{
-    float:right;
-    font-family:'Space Mono', monospace;
-    background:none;
-    border:2px solid var(--line);
-    padding:0.3rem 0.7rem;
-    cursor:pointer;
-  }
 </style>
 </head>
 <body>
@@ -468,7 +422,7 @@
     <a href="#register" class="btn">Join The Squad</a>
     <a href="#details" class="btn btn-blue">Mission Details</a>
   </div>
-  <div class="joined">HEROES ALREADY REGISTERED: <strong id="joinedCount">—</strong></div>
+  <div class="joined">SPOTS ARE FILLING FAST — DON'T WAIT.</div>
 </header>
 
 <!-- COUNTDOWN -->
@@ -537,7 +491,10 @@
     <div class="kicker">Suit Up</div>
     <h2 class="display section-title">Register For The Night</h2>
     <div class="register-grid">
-      <form id="regForm" class="panel" novalidate>
+      <form id="regForm" class="panel" name="registration" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="registration">
+        <p class="hidden-field"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+
         <div class="row-2">
           <div class="field">
             <label for="fname">Full Name</label>
@@ -553,10 +510,6 @@
             <label for="fphone">Phone</label>
             <input type="tel" id="fphone" name="fphone" required autocomplete="tel">
           </div>
-           <div class="field">
-            <label for="fphone">INSTAGRAM USERNAME</label>
-            <input type="text" id="finsta" name="finsta" required autocomplete="username">
-          </div>
           <div class="field">
             <label for="fyear">Year</label>
             <select id="fyear" name="fyear" required>
@@ -564,6 +517,10 @@
               <option>FRESHER</option>
             </select>
           </div>
+        </div>
+        <div class="field">
+          <label for="finsta">Instagram Username</label>
+          <input type="text" id="finsta" name="finsta" required autocomplete="username">
         </div>
         <div class="field">
           <label for="fcourse">Course &amp; Branch</label>
@@ -591,31 +548,13 @@
   <div>Lucknow University Students' Council · See you on campus, hero.</div>
 </footer>
 
-<button class="admin-toggle" id="adminToggle">ORGANIZER LOGIN</button>
-
-<div class="admin-overlay" id="adminOverlay">
-  <div class="admin-modal panel">
-    <button class="close-admin" id="closeAdmin">CLOSE ✕</button>
-    <h2 class="display">Registration Desk</h2>
-    <div class="sub" id="adminSub">Loading…</div>
-    <div class="admin-row-actions">
-      <button class="btn" id="exportCsv">Export CSV</button>
-      <button class="btn btn-blue" id="refreshAdmin">Refresh</button>
-    </div>
-    <div id="adminTableWrap"></div>
-  </div>
-</div>
-
 <script>
 (function(){
   "use strict";
 
-  /* ============ EDIT THESE TO CUSTOMIZE ============ */
+  /* ============ EDIT THIS TO CUSTOMIZE ============ */
   var EVENT_DATE = new Date('2026-09-15T18:00:00'); // event date/time shown in countdown
-  var ADMIN_PASSWORD = 'LU2026'; // simple gate for organizer panel — change this
   /* =================================================== */
-
-  var STORAGE_KEY = 'freshers-registrations';
 
   /* ---------- Hero video ---------- */
   var heroVideo = document.getElementById('heroVideo');
@@ -632,7 +571,9 @@
     });
     heroVideo.addEventListener('error', function(){
       heroEl.classList.remove('video-active');
+      videoToggle.style.display = 'none';
     });
+
     if(prefersReducedMotion){
       heroVideo.removeAttribute('autoplay');
       heroVideo.pause();
@@ -652,14 +593,8 @@
       }
     });
 
-    // If the video file is missing/unavailable, hide the toggle so it doesn't sit uselessly on screen
-    heroVideo.addEventListener('error', function(){
-      videoToggle.style.display = 'none';
-    });
-
-    // Fallback check in case the error event fired before this listener attached,
-    // or the browser never fires it for a missing source: if nothing has loaded
-    // after a couple of seconds, assume there's no video and hide the toggle.
+    // Fallback in case the error event fired before this listener attached,
+    // or the browser never fires it for a missing source.
     setTimeout(function(){
       if(heroVideo.error || heroVideo.readyState === 0){
         videoToggle.style.display = 'none';
@@ -694,35 +629,7 @@
   tickCountdown();
   setInterval(tickCountdown, 1000);
 
-  /* ---------- Storage helpers ---------- */
-  async function getRegistrations(){
-    try{
-      var res = await window.storage.get(STORAGE_KEY, true);
-      if(!res || !res.value) return [];
-      var parsed = JSON.parse(res.value);
-      return Array.isArray(parsed) ? parsed : [];
-    }catch(e){
-      return [];
-    }
-  }
-  async function saveRegistrations(list){
-    try{
-      var res = await window.storage.set(STORAGE_KEY, JSON.stringify(list), true);
-      return !!res;
-    }catch(e){
-      return false;
-    }
-  }
-
-  /* ---------- Joined count on hero ---------- */
-  async function refreshJoinedCount(){
-    var list = await getRegistrations();
-    var el = document.getElementById('joinedCount');
-    el.textContent = list.length;
-  }
-  refreshJoinedCount();
-
-  /* ---------- Registration form ---------- */
+  /* ---------- Registration form -> Netlify Forms ---------- */
   var form = document.getElementById('regForm');
   var msg = document.getElementById('formMsg');
   var submitBtn = document.getElementById('submitBtn');
@@ -733,16 +640,24 @@
     msg.className = 'form-msg mono show ' + kind;
   }
 
-  form.addEventListener('submit', async function(e){
+  function encodeFormData(data){
+    return Object.keys(data).map(function(key){
+      return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+    }).join('&');
+  }
+
+  form.addEventListener('submit', function(e){
     e.preventDefault();
+
     var name = document.getElementById('fname').value.trim();
     var email = document.getElementById('femail').value.trim();
     var phone = document.getElementById('fphone').value.trim();
+    var insta = document.getElementById('finsta').value.trim();
     var year = document.getElementById('fyear').value;
     var course = document.getElementById('fcourse').value.trim();
     var alias = document.getElementById('falias').value.trim();
 
-    if(!name || !email || !phone || !year || !course){
+    if(!name || !email || !phone || !insta || !year || !course){
       showMsg('Fill in every required field before locking in your spot.', 'err');
       return;
     }
@@ -750,35 +665,28 @@
     submitBtn.disabled = true;
     submitBtn.textContent = 'Locking In…';
 
-    try{
-      var list = await getRegistrations();
-      var alreadyIn = list.some(function(r){ return r.email.toLowerCase() === email.toLowerCase(); });
-      if(alreadyIn){
-        showMsg('This email is already registered for the night.', 'err');
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Lock In My Spot';
-        return;
-      }
-      list.push({
-        id: Date.now() + '-' + Math.random().toString(36).slice(2,8),
-        name: name, email: email, phone: phone, year: year, course: course, alias: alias,
-        registeredAt: new Date().toISOString()
-      });
-      var ok = await saveRegistrations(list);
-      if(!ok){
-        showMsg('Something glitched on our end — please try again.', 'err');
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Lock In My Spot';
-        return;
-      }
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: encodeFormData({
+        'form-name': 'registration',
+        fname: name,
+        femail: email,
+        fphone: phone,
+        finsta: insta,
+        fyear: year,
+        fcourse: course,
+        falias: alias
+      })
+    }).then(function(res){
+      if(!res.ok) throw new Error('Bad response: ' + res.status);
       form.style.display = 'none';
       successCard.classList.add('show');
-      refreshJoinedCount();
-    }catch(err){
-      showMsg('Something glitched on our end — please try again.', 'err');
+    }).catch(function(){
+      showMsg('Something glitched on our end — please try again in a moment.', 'err');
       submitBtn.disabled = false;
       submitBtn.textContent = 'Lock In My Spot';
-    }
+    });
   });
 
   document.getElementById('registerAnother').addEventListener('click', function(){
@@ -788,88 +696,6 @@
     msg.classList.remove('show');
     submitBtn.disabled = false;
     submitBtn.textContent = 'Lock In My Spot';
-  });
-
-  /* ---------- Admin panel ---------- */
-  var adminToggle = document.getElementById('adminToggle');
-  var adminOverlay = document.getElementById('adminOverlay');
-  var adminSub = document.getElementById('adminSub');
-  var adminTableWrap = document.getElementById('adminTableWrap');
-  var unlocked = false;
-
-  function escapeHtml(str){
-    return String(str).replace(/[&<>"']/g, function(c){
-      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
-    });
-  }
-
-  async function renderAdminTable(){
-    adminSub.textContent = 'Loading registrations…';
-    var list = await getRegistrations();
-    list.sort(function(a,b){ return new Date(b.registeredAt) - new Date(a.registeredAt); });
-    adminSub.textContent = list.length + ' hero(es) registered so far.';
-    if(list.length === 0){
-      adminTableWrap.innerHTML = '<div class="empty-state">No registrations yet. Once people start signing up, they will show here.</div>';
-      return;
-    }
-    var rows = list.map(function(r){
-      return '<tr>' +
-        '<td>' + escapeHtml(r.name) + '</td>' +
-        '<td>' + escapeHtml(r.email) + '</td>' +
-        '<td>' + escapeHtml(r.phone) + '</td>' +
-        '<td>' + escapeHtml(r.course) + '</td>' +
-        '<td>' + escapeHtml(r.year) + '</td>' +
-        '<td>' + escapeHtml(r.alias || '—') + '</td>' +
-        '<td>' + new Date(r.registeredAt).toLocaleString() + '</td>' +
-      '</tr>';
-    }).join('');
-    adminTableWrap.innerHTML =
-      '<div style="overflow-x:auto;"><table><thead><tr>' +
-      '<th>Name</th><th>Email</th><th>Phone</th><th>Course</th><th>Year</th><th>Alias</th><th>Registered At</th>' +
-      '</tr></thead><tbody>' + rows + '</tbody></table></div>';
-  }
-
-  adminToggle.addEventListener('click', function(){
-    if(!unlocked){
-      var pw = prompt('Organizer password:');
-      if(pw !== ADMIN_PASSWORD){
-        if(pw !== null) alert('Incorrect password.');
-        return;
-      }
-      unlocked = true;
-    }
-    adminOverlay.classList.add('show');
-    renderAdminTable();
-  });
-
-  document.getElementById('closeAdmin').addEventListener('click', function(){
-    adminOverlay.classList.remove('show');
-  });
-  adminOverlay.addEventListener('click', function(e){
-    if(e.target === adminOverlay) adminOverlay.classList.remove('show');
-  });
-  document.getElementById('refreshAdmin').addEventListener('click', renderAdminTable);
-
-  document.getElementById('exportCsv').addEventListener('click', async function(){
-    var list = await getRegistrations();
-    if(list.length === 0){ alert('No registrations to export yet.'); return; }
-    var header = ['Name','Email','Phone','Course','Year','Alias','Registered At'];
-    var lines = [header.join(',')];
-    list.forEach(function(r){
-      var row = [r.name, r.email, r.phone, r.course, r.year, r.alias || '', r.registeredAt]
-        .map(function(v){ return '"' + String(v).replace(/"/g,'""') + '"'; });
-      lines.push(row.join(','));
-    });
-    var csv = lines.join('\n');
-    var blob = new Blob([csv], { type: 'text/csv' });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = 'freshers-night-registrations.csv';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
   });
 
 })();
