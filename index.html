@@ -110,11 +110,41 @@
     border-bottom:5px solid var(--line);
   }
 
+  .hero-video{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    z-index:0;
+    background:var(--ink); /* shows while video loads / if it fails */
+  }
+
+  .hero-video-overlay{
+    position:absolute; inset:0;
+    z-index:1;
+    background: linear-gradient(160deg, rgba(28,63,148,0.78) 0%, rgba(15,42,107,0.82) 55%, rgba(10,14,26,0.9) 100%);
+  }
+
+  .video-toggle{
+    position:absolute; top:1.1rem; right:1.1rem; z-index:3;
+    display:flex; align-items:center; gap:0.4rem;
+    font-family:'Space Mono', monospace;
+    font-size:0.68rem;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--paper);
+    background:rgba(10,14,26,0.6);
+    border:2px solid var(--paper);
+    padding:0.45rem 0.7rem;
+    cursor:pointer;
+  }
+  .video-toggle:hover{ background:rgba(10,14,26,0.85); }
+
   .web-corner{
     position:absolute;
     width:340px; height:340px;
     pointer-events:none;
     opacity:0.35;
+    z-index:1;
   }
   .web-corner.tl{ top:-40px; left:-40px; }
   .web-corner.br{ bottom:-40px; right:-40px; transform:rotate(180deg); }
@@ -128,7 +158,7 @@
     background: var(--red);
     clip-path: polygon(50% 0%, 61% 35%, 95% 25%, 72% 52%, 98% 68%, 63% 68%, 50% 100%, 37% 68%, 2% 68%, 28% 52%, 5% 25%, 39% 35%);
     opacity:0.18;
-    z-index:0;
+    z-index:1;
   }
 
   .hero-eyebrow{
@@ -401,6 +431,11 @@
 
 <!-- HERO -->
 <header class="hero" id="top">
+  <video class="hero-video" id="heroVideo" autoplay muted loop playsinline poster="assets/hero-poster.jpg">
+    <source src="assets/hero-video.mp4" type="video/mp4">
+  </video>
+  <div class="hero-video-overlay" aria-hidden="true"></div>
+  <button class="video-toggle" id="videoToggle" type="button" aria-label="Pause background video">⏸ Pause</button>
   <svg class="web-corner tl" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#F4EFDE" stroke-width="1.4">
     <line x1="0" y1="0" x2="200" y2="0"/><line x1="0" y1="0" x2="0" y2="200"/>
     <line x1="0" y1="0" x2="200" y2="200"/><line x1="0" y1="0" x2="140" y2="200"/>
@@ -577,6 +612,37 @@
 
   var STORAGE_KEY = 'freshers-registrations';
 
+  /* ---------- Hero video ---------- */
+  var heroVideo = document.getElementById('heroVideo');
+  var videoToggle = document.getElementById('videoToggle');
+  var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if(heroVideo && videoToggle){
+    if(prefersReducedMotion){
+      heroVideo.removeAttribute('autoplay');
+      heroVideo.pause();
+      videoToggle.textContent = '▶ Play';
+      videoToggle.setAttribute('aria-label', 'Play background video');
+    }
+
+    videoToggle.addEventListener('click', function(){
+      if(heroVideo.paused){
+        heroVideo.play();
+        videoToggle.textContent = '⏸ Pause';
+        videoToggle.setAttribute('aria-label', 'Pause background video');
+      }else{
+        heroVideo.pause();
+        videoToggle.textContent = '▶ Play';
+        videoToggle.setAttribute('aria-label', 'Play background video');
+      }
+    });
+
+    // If the video file is missing/unavailable, hide the toggle so it doesn't sit uselessly on screen
+    heroVideo.addEventListener('error', function(){
+      videoToggle.style.display = 'none';
+    });
+  }
+
   /* ---------- Countdown ---------- */
   function pad(n){ return String(n).padStart(2,'0'); }
   function tickCountdown(){
@@ -647,7 +713,6 @@
     e.preventDefault();
     var name = document.getElementById('fname').value.trim();
     var email = document.getElementById('femail').value.trim();
-    var Insta_Username = document.getElementById('fInsta Userranme').value.trim();
     var phone = document.getElementById('fphone').value.trim();
     var year = document.getElementById('fyear').value;
     var course = document.getElementById('fcourse').value.trim();
