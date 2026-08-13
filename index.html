@@ -642,7 +642,8 @@
   "use strict";
 
   /* ============ EDIT THIS TO CUSTOMIZE ============ */
-  var EVENT_DATE = new Date('2026-09-15T18:00:00'); // event date/time shown in countdown
+  var DATE_TBD = true; // set to false once the real event date is fixed
+  var EVENT_DATE = new Date('2026-09-15T18:00:00'); // event date/time shown in countdown (used only when DATE_TBD is false)
   /* =================================================== */
 
   /* ---------- Hero video ---------- */
@@ -694,9 +695,17 @@
   /* ---------- Countdown ---------- */
   function pad(n){ return String(n).padStart(2,'0'); }
   function tickCountdown(){
+    var note = document.getElementById('countdownNote');
+    if(DATE_TBD){
+      document.getElementById('cd-days').textContent = '00';
+      document.getElementById('cd-hours').textContent = '00';
+      document.getElementById('cd-mins').textContent = '00';
+      document.getElementById('cd-secs').textContent = '00';
+      note.textContent = 'Date to be announced — stay tuned, hero.';
+      return;
+    }
     var now = new Date();
     var diff = EVENT_DATE - now;
-    var note = document.getElementById('countdownNote');
     if(diff <= 0){
       document.getElementById('cd-days').textContent = '00';
       document.getElementById('cd-hours').textContent = '00';
