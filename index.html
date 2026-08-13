@@ -167,11 +167,12 @@
 
   .hero-eyebrow{
     position:relative; z-index:2;
-    font-family:'Space Mono', monospace;
+    font-family:'Bangers', cursive;
     text-transform:uppercase;
-    letter-spacing:3px;
-    font-size:0.85rem;
+    letter-spacing:2px;
+    font-size:clamp(1.1rem, 2.6vw, 1.7rem);
     color:var(--pow);
+    text-shadow: 2px 2px 0 var(--line), -1px -1px 0 var(--line), 1px -1px 0 var(--line), -1px 1px 0 var(--line);
     margin-bottom:1rem;
   }
 
@@ -679,11 +680,16 @@
         falias: alias
       })
     }).then(function(res){
-      if(!res.ok) throw new Error('Bad response: ' + res.status);
+      if(!res.ok){
+        return res.text().then(function(bodyText){
+          throw new Error('HTTP ' + res.status + (bodyText ? ' — ' + bodyText.slice(0, 150) : ''));
+        });
+      }
       form.style.display = 'none';
       successCard.classList.add('show');
-    }).catch(function(){
-      showMsg('Something glitched on our end — please try again in a moment.', 'err');
+    }).catch(function(err){
+      var detail = (err && err.message) ? err.message : 'network error';
+      showMsg('Registration failed: ' + detail + '. Please screenshot this exact message.', 'err');
       submitBtn.disabled = false;
       submitBtn.textContent = 'Lock In My Spot';
     });
