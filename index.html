@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fresher's Night — Lucknow University</title>
+<title>Rampage 26 — Fresher's Night | Lucknow University</title>
+<link rel="icon" type="image/jpeg" href="rampage-logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -163,6 +164,18 @@
     clip-path: polygon(50% 0%, 61% 35%, 95% 25%, 72% 52%, 98% 68%, 63% 68%, 50% 100%, 37% 68%, 2% 68%, 28% 52%, 5% 25%, 39% 35%);
     opacity:0.18;
     z-index:1;
+  }
+
+  .hero-logo{
+    position:relative; z-index:2;
+    width: clamp(88px, 14vw, 150px);
+    height: clamp(88px, 14vw, 150px);
+    border-radius:50%;
+    border:4px solid var(--line);
+    box-shadow: 5px 5px 0 var(--pow);
+    object-fit:cover;
+    background:var(--ink);
+    margin-bottom:1.3rem;
   }
 
   .hero-eyebrow{
@@ -379,7 +392,7 @@
 <body>
 
 <nav class="nav">
-  <div class="brand display">LU // FRESHERS</div>
+  <div class="brand display">LU // RAMPAGE 26</div>
   <div class="links">
     <a href="#details">Mission</a>
     <a href="#about">Origin</a>
@@ -414,9 +427,10 @@
   </svg>
   <div class="burst" aria-hidden="true"></div>
 
-  <div class="hero-eyebrow">Lucknow University Students' Council Presents</div>
-  <h1 class="display">RAMPAGE<br>NIGHT</h1>
-  <div class="tagline">Every Legend Has A First Day.</div>
+  <img class="hero-logo" src="rampage-logo.jpg" alt="Rampage 26 — Fresher's Party, University of Lucknow">
+  <div class="hero-eyebrow">Lucknow University Students' Council Presents · Fresher's Party</div>
+  <h1 class="display">RAMPAGE<br>26</h1>
+  <div class="tagline">One Night. One Vibe. One Beginning.</div>
   <p class="sub">One night, one campus, one brand-new batch of heroes. Swing in, suit up, and meet the class that's about to make Lucknow University history.</p>
   <div class="cta-row">
     <a href="#register" class="btn">Join The Squad</a>
@@ -536,7 +550,7 @@
 
       <div class="success-card panel" id="successCard">
         <h3>BAM! You're In.</h3>
-        <p>Your spot for Fresher's Night is confirmed. Keep an eye on your email — details and surprises are coming.</p>
+        <p>Your spot for Rampage 26 is confirmed. Keep an eye on your email — details and surprises are coming.</p>
         <button class="btn" id="registerAnother" style="margin-top:1.2rem;">Register Someone Else</button>
       </div>
     </div>
@@ -544,8 +558,8 @@
 </section>
 
 <footer>
-  <div class="fbrand">FRESHERS NIGHT</div>
-  <div>Lucknow University Students' Council · See you on campus, hero.</div>
+  <div class="fbrand">RAMPAGE 26</div>
+  <div>Lucknow University Students' Council · Fresher's Party · See you on campus, hero.</div>
 </footer>
 
 <script>
@@ -553,6 +567,7 @@
   "use strict";
 
   /* ============ EDIT THIS TO CUSTOMIZE ============ */
+  var EVENT_DATE_ANNOUNCED = false; // set to true once your real date is locked in below
   var EVENT_DATE = new Date('2026-09-15T18:00:00'); // event date/time shown in countdown
   /* =================================================== */
 
@@ -605,9 +620,17 @@
   /* ---------- Countdown ---------- */
   function pad(n){ return String(n).padStart(2,'0'); }
   function tickCountdown(){
+    var note = document.getElementById('countdownNote');
+    if(!EVENT_DATE_ANNOUNCED){
+      document.getElementById('cd-days').textContent = '00';
+      document.getElementById('cd-hours').textContent = '00';
+      document.getElementById('cd-mins').textContent = '00';
+      document.getElementById('cd-secs').textContent = '00';
+      note.textContent = 'Date dropping soon — stay tuned.';
+      return;
+    }
     var now = new Date();
     var diff = EVENT_DATE - now;
-    var note = document.getElementById('countdownNote');
     if(diff <= 0){
       document.getElementById('cd-days').textContent = '00';
       document.getElementById('cd-hours').textContent = '00';
