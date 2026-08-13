@@ -483,6 +483,52 @@
   }
   footer .fsocial a:hover{ transform:translateY(-2px); background:var(--pow); border-color:var(--pow); color:var(--ink); }
   footer .fsocial svg{ width:18px; height:18px; fill:currentColor; }
+
+  /* ---------- guests ---------- */
+  .guests{ padding:5rem 1.5rem; }
+  .guests .section-inner{ max-width:1000px; margin:0 auto; text-align:center; }
+  .guest-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap:2rem;
+    margin-top:2.5rem;
+  }
+  .guest-card{
+    background:var(--white);
+    text-align:center;
+    padding:1.4rem 1.2rem 1.6rem;
+  }
+  .guest-photo{
+    width:100%;
+    aspect-ratio:1/1;
+    background:repeating-linear-gradient(45deg, var(--paper) 0 10px, #e6e0cc 10px 20px);
+    border:3px dashed var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-family:'Space Mono', monospace;
+    font-size:0.8rem;
+    letter-spacing:0.5px;
+    color:var(--ink);
+    opacity:0.55;
+    margin-bottom:1.1rem;
+    padding:1rem;
+  }
+  .guest-name{
+    font-family:'Bangers', cursive;
+    font-size:1.5rem;
+    letter-spacing:1px;
+    color:var(--ink);
+  }
+  .guest-role{
+    font-family:'Space Mono', monospace;
+    font-size:0.85rem;
+    color:var(--blue);
+    margin-top:0.3rem;
+    min-height:1.2em;
+  }
+  .guest-role.tbd{ color:#999; font-style:italic; }
 </style>
 </head>
 <body>
@@ -493,6 +539,7 @@
     <div class="links">
       <a href="#details">Mission</a>
       <a href="#about">Origin</a>
+      <a href="#guests">Guests</a>
       <a href="#register">Register</a>
       <a href="#community">Community</a>
     </div>
@@ -602,6 +649,21 @@
     <h2 class="display section-title">Your Story Starts Here</h2>
     <p>Every senior on this campus was a fresher once — nervous, curious, and one night away from finding their people. Fresher's Night is that night: the one where strangers from forty different classrooms become one loud, unstoppable batch.</p>
     <p>Expect music, games, performances, a few surprises, and the kind of energy that only happens when an entire university welcomes its newest members at once. Come find your crew.</p>
+  </div>
+</section>
+
+<!-- GUESTS -->
+<section class="guests" id="guests">
+  <div class="section-inner">
+    <div class="kicker">Special Appearance</div>
+    <h2 class="display section-title">Meet The Guests</h2>
+    <div class="guest-grid">
+      <div class="guest-card panel">
+        <div class="guest-photo">PHOTO<br>COMING SOON</div>
+        <div class="guest-name">Jyotiraditya</div>
+        <div class="guest-role tbd">Role to be announced</div>
+      </div>
+    </div>
   </div>
 </section>
 
