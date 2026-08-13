@@ -122,6 +122,10 @@
     position:absolute; inset:0;
     z-index:1;
     background: linear-gradient(160deg, rgba(28,63,148,0.78) 0%, rgba(15,42,107,0.82) 55%, rgba(10,14,26,0.9) 100%);
+    transition: opacity 0.7s ease;
+  }
+  .hero.video-active .hero-video-overlay{
+    opacity:0;
   }
 
   .video-toggle{
@@ -615,9 +619,19 @@
   /* ---------- Hero video ---------- */
   var heroVideo = document.getElementById('heroVideo');
   var videoToggle = document.getElementById('videoToggle');
+  var heroEl = document.getElementById('top');
   var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if(heroVideo && videoToggle){
+    heroVideo.addEventListener('playing', function(){
+      heroEl.classList.add('video-active');
+    });
+    heroVideo.addEventListener('pause', function(){
+      heroEl.classList.remove('video-active');
+    });
+    heroVideo.addEventListener('error', function(){
+      heroEl.classList.remove('video-active');
+    });
     if(prefersReducedMotion){
       heroVideo.removeAttribute('autoplay');
       heroVideo.pause();
