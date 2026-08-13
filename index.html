@@ -431,8 +431,8 @@
 
 <!-- HERO -->
 <header class="hero" id="top">
-  <video class="hero-video" id="heroVideo" autoplay muted loop playsinline poster="assets/hero-poster.jpg">
-    <source src="assets/hero-video.mp4" type="video/mp4">
+  <video class="hero-video" id="heroVideo" autoplay muted loop playsinline>
+    <source src="hero-video.mp4" type="video/mp4">
   </video>
   <div class="hero-video-overlay" aria-hidden="true"></div>
   <button class="video-toggle" id="videoToggle" type="button" aria-label="Pause background video">⏸ Pause</button>
@@ -641,6 +641,15 @@
     heroVideo.addEventListener('error', function(){
       videoToggle.style.display = 'none';
     });
+
+    // Fallback check in case the error event fired before this listener attached,
+    // or the browser never fires it for a missing source: if nothing has loaded
+    // after a couple of seconds, assume there's no video and hide the toggle.
+    setTimeout(function(){
+      if(heroVideo.error || heroVideo.readyState === 0){
+        videoToggle.style.display = 'none';
+      }
+    }, 2500);
   }
 
   /* ---------- Countdown ---------- */
