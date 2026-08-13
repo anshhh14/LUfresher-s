@@ -375,16 +375,80 @@
     font-size:0.8rem;
   }
   footer .fbrand{ color:var(--pow); font-family:'Bangers', cursive; font-size:1.3rem; letter-spacing:1px; margin-bottom:0.5rem; }
+
+  /* ---------- social links ---------- */
+  .nav .social{ display:flex; align-items:center; gap:0.8rem; }
+  .nav .social a{
+    display:flex; align-items:center; justify-content:center;
+    width:34px; height:34px;
+    border:2px solid var(--paper-dim);
+    border-radius:50%;
+    color:var(--paper);
+    transition: transform .12s ease, background .12s ease, border-color .12s ease;
+  }
+  .nav .social a:hover{ transform:translateY(-2px); background:var(--pow); border-color:var(--pow); color:var(--ink); }
+  .nav .social svg{ width:18px; height:18px; fill:currentColor; }
+  .nav .bar{ display:flex; align-items:center; gap:1.4rem; }
+  @media (max-width:560px){ .nav .social{ gap:0.5rem; } .nav .social a{ width:30px; height:30px; } }
+
+  .community{
+    padding:4rem 1.5rem;
+    text-align:center;
+    background:var(--blue);
+    color:var(--white);
+    border-top:3px solid var(--line);
+    border-bottom:3px solid var(--line);
+  }
+  .community h2{ font-size:2.4rem; margin-bottom:0.6rem; }
+  .community p{ max-width:520px; margin:0 auto 2rem; font-size:1rem; opacity:0.9; }
+  .community .social-row{ display:flex; gap:1.2rem; justify-content:center; flex-wrap:wrap; }
+  .community .social-btn{
+    display:inline-flex; align-items:center; gap:0.6rem;
+    font-family:'Bangers', cursive; font-size:1.1rem; letter-spacing:1px;
+    padding:0.8rem 1.6rem;
+    border:3px solid var(--line);
+    box-shadow:5px 5px 0 var(--line);
+    text-decoration:none;
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .community .social-btn:hover{ transform:translate(-2px,-2px); box-shadow:7px 7px 0 var(--line); }
+  .community .social-btn:active{ transform:translate(1px,1px); box-shadow:3px 3px 0 var(--line); }
+  .community .social-btn.insta{ background:var(--white); color:var(--ink); }
+  .community .social-btn.whatsapp{ background:#25D366; color:var(--ink); }
+  .community .social-btn svg{ width:22px; height:22px; fill:currentColor; }
+
+  footer .fsocial{ display:flex; justify-content:center; gap:1rem; margin-top:1rem; }
+  footer .fsocial a{
+    display:flex; align-items:center; justify-content:center;
+    width:36px; height:36px;
+    border:2px solid var(--paper-dim);
+    border-radius:50%;
+    color:var(--paper-dim);
+    transition: transform .12s ease, background .12s ease, color .12s ease;
+  }
+  footer .fsocial a:hover{ transform:translateY(-2px); background:var(--pow); border-color:var(--pow); color:var(--ink); }
+  footer .fsocial svg{ width:18px; height:18px; fill:currentColor; }
 </style>
 </head>
 <body>
 
 <nav class="nav">
   <div class="brand display">LU // FRESHERS</div>
-  <div class="links">
-    <a href="#details">Mission</a>
-    <a href="#about">Origin</a>
-    <a href="#register">Register</a>
+  <div class="bar">
+    <div class="links">
+      <a href="#details">Mission</a>
+      <a href="#about">Origin</a>
+      <a href="#register">Register</a>
+      <a href="#community">Community</a>
+    </div>
+    <div class="social">
+      <a href="https://www.instagram.com/rampagefreshers26?igsh=MWk0emVhM3ppaWhseA==" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465a4.9 4.9 0 011.771 1.153 4.9 4.9 0 011.153 1.771c.248.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.123 0 2.717-.01 3.056-.06 4.122-.05 1.065-.217 1.79-.465 2.428a4.9 4.9 0 01-1.153 1.771 4.9 4.9 0 01-1.771 1.153c-.637.248-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06-2.718 0-3.057-.01-4.123-.06-1.065-.05-1.79-.217-2.428-.465a4.9 4.9 0 01-1.771-1.153 4.9 4.9 0 01-1.153-1.771c-.248-.637-.415-1.363-.465-2.428C2.01 15.056 2 14.717 2 12c0-2.718.01-3.057.06-4.123.05-1.065.217-1.79.465-2.428A4.9 4.9 0 013.678 3.678 4.9 4.9 0 015.449 2.525c.637-.248 1.363-.415 2.428-.465C8.943 2.01 9.282 2 12 2zm0 5a5 5 0 100 10 5 5 0 000-10zm0 8.25a3.25 3.25 0 110-6.5 3.25 3.25 0 010 6.5zm5.2-8.45a1.17 1.17 0 100-2.34 1.17 1.17 0 000 2.34z"/></svg>
+      </a>
+      <a href="https://chat.whatsapp.com/IGeiOkAmboF7htBDSbVYGL?s=cl&p=a&ilr=1" target="_blank" rel="noopener noreferrer" aria-label="Join our WhatsApp community">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 004.75 1.21h.004c5.46 0 9.91-4.45 9.91-9.91C21.97 6.45 17.5 2 12.04 2zm0 18.13h-.003a8.2 8.2 0 01-4.19-1.15l-.3-.18-3.14.82.84-3.06-.2-.31a8.2 8.2 0 01-1.26-4.34c0-4.55 3.7-8.25 8.26-8.25 2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 012.42 5.83c0 4.56-3.7 8.26-8.25 8.26zm4.52-6.19c-.25-.12-1.47-.72-1.7-.81-.23-.08-.4-.12-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.71-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.44-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42-.14-.01-.31-.01-.48-.01a.92.92 0 00-.67.31c-.23.25-.87.85-.87 2.08 0 1.22.89 2.4 1.02 2.57.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
+      </a>
+    </div>
   </div>
 </nav>
 
@@ -544,9 +608,33 @@
   </div>
 </section>
 
+<!-- JOIN COMMUNITY -->
+<section class="community" id="community">
+  <h2 class="display">JOIN THE COMMUNITY</h2>
+  <p>Squad talk, drops, and behind-the-scenes chaos happen off this page. Follow us and jump into the group — this is where it's really happening.</p>
+  <div class="social-row">
+    <a class="social-btn insta" href="https://www.instagram.com/rampagefreshers26?igsh=MWk0emVhM3ppaWhseA==" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465a4.9 4.9 0 011.771 1.153 4.9 4.9 0 011.153 1.771c.248.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.123 0 2.717-.01 3.056-.06 4.122-.05 1.065-.217 1.79-.465 2.428a4.9 4.9 0 01-1.153 1.771 4.9 4.9 0 01-1.771 1.153c-.637.248-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06-2.718 0-3.057-.01-4.123-.06-1.065-.05-1.79-.217-2.428-.465a4.9 4.9 0 01-1.771-1.153 4.9 4.9 0 01-1.153-1.771c-.248-.637-.415-1.363-.465-2.428C2.01 15.056 2 14.717 2 12c0-2.718.01-3.057.06-4.123.05-1.065.217-1.79.465-2.428A4.9 4.9 0 013.678 3.678 4.9 4.9 0 015.449 2.525c.637-.248 1.363-.415 2.428-.465C8.943 2.01 9.282 2 12 2zm0 5a5 5 0 100 10 5 5 0 000-10zm0 8.25a3.25 3.25 0 110-6.5 3.25 3.25 0 010 6.5zm5.2-8.45a1.17 1.17 0 100-2.34 1.17 1.17 0 000 2.34z"/></svg>
+      Follow on Instagram
+    </a>
+    <a class="social-btn whatsapp" href="https://chat.whatsapp.com/IGeiOkAmboF7htBDSbVYGL?s=cl&p=a&ilr=1" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 004.75 1.21h.004c5.46 0 9.91-4.45 9.91-9.91C21.97 6.45 17.5 2 12.04 2zm0 18.13h-.003a8.2 8.2 0 01-4.19-1.15l-.3-.18-3.14.82.84-3.06-.2-.31a8.2 8.2 0 01-1.26-4.34c0-4.55 3.7-8.25 8.26-8.25 2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 012.42 5.83c0 4.56-3.7 8.26-8.25 8.26zm4.52-6.19c-.25-.12-1.47-.72-1.7-.81-.23-.08-.4-.12-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.71-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.44-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42-.14-.01-.31-.01-.48-.01a.92.92 0 00-.67.31c-.23.25-.87.85-.87 2.08 0 1.22.89 2.4 1.02 2.57.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
+      Join WhatsApp Community
+    </a>
+  </div>
+</section>
+
 <footer>
   <div class="fbrand">FRESHERS NIGHT</div>
   <div>Lucknow University Students' Council · See you on campus, hero.</div>
+  <div class="fsocial">
+    <a href="https://www.instagram.com/rampagefreshers26?igsh=MWk0emVhM3ppaWhseA==" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465a4.9 4.9 0 011.771 1.153 4.9 4.9 0 011.153 1.771c.248.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.123 0 2.717-.01 3.056-.06 4.122-.05 1.065-.217 1.79-.465 2.428a4.9 4.9 0 01-1.153 1.771 4.9 4.9 0 01-1.771 1.153c-.637.248-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06-2.718 0-3.057-.01-4.123-.06-1.065-.05-1.79-.217-2.428-.465a4.9 4.9 0 01-1.771-1.153 4.9 4.9 0 01-1.153-1.771c-.248-.637-.415-1.363-.465-2.428C2.01 15.056 2 14.717 2 12c0-2.718.01-3.057.06-4.123.05-1.065.217-1.79.465-2.428A4.9 4.9 0 013.678 3.678 4.9 4.9 0 015.449 2.525c.637-.248 1.363-.415 2.428-.465C8.943 2.01 9.282 2 12 2zm0 5a5 5 0 100 10 5 5 0 000-10zm0 8.25a3.25 3.25 0 110-6.5 3.25 3.25 0 010 6.5zm5.2-8.45a1.17 1.17 0 100-2.34 1.17 1.17 0 000 2.34z"/></svg>
+    </a>
+    <a href="https://chat.whatsapp.com/IGeiOkAmboF7htBDSbVYGL?s=cl&p=a&ilr=1" target="_blank" rel="noopener noreferrer" aria-label="Join our WhatsApp community">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 004.75 1.21h.004c5.46 0 9.91-4.45 9.91-9.91C21.97 6.45 17.5 2 12.04 2zm0 18.13h-.003a8.2 8.2 0 01-4.19-1.15l-.3-.18-3.14.82.84-3.06-.2-.31a8.2 8.2 0 01-1.26-4.34c0-4.55 3.7-8.25 8.26-8.25 2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 012.42 5.83c0 4.56-3.7 8.26-8.25 8.26zm4.52-6.19c-.25-.12-1.47-.72-1.7-.81-.23-.08-.4-.12-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.71-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.44-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42-.14-.01-.31-.01-.48-.01a.92.92 0 00-.67.31c-.23.25-.87.85-.87 2.08 0 1.22.89 2.4 1.02 2.57.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
+    </a>
+  </div>
 </footer>
 
 <script>
